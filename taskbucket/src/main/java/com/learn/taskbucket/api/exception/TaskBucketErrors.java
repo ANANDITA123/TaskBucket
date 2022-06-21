@@ -19,7 +19,7 @@ public enum TaskBucketErrors {
 	INVALID_USER_ID("EC-105", "User Id is invalid"),
 	INCORRECT_ROLE("EC-106", "Incorrect user-role mapping"),
 	UNABLE_TO_DELETE("EC-107", "Unable to delete, please check the request details"),
-	INVALID_START("EC-108", "Provided start index is out of reach"),
+	INVALID_START("EC-108", "Start and End Index Cannot be Same"),
 	INVALID_END("EC-109", "Provided end index is out of reach"),
 	INVALID_VIEW_TYPE("FC-109", "Please provide supported view types i.e.(OPEN, CLOSED, INPROGRESS, ALL)"),
 	INVALID_RANGE("EC-109", "The range of the data set is invalid"),

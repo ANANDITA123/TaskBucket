@@ -16,17 +16,23 @@ import org.springframework.web.bind.annotation.RestController;
 import com.learn.taskbucket.api.dto.CreateTaskRequest;
 import com.learn.taskbucket.api.dto.DeleteTaskRequest;
 import com.learn.taskbucket.api.dto.UpdateTaskRequest;
-import com.learn.taskbucket.api.exception.ControllerException;
-import com.learn.taskbucket.api.exception.TaskBucketErrors;
-import com.learn.taskbucket.api.exception.TaskBucketException;
-import com.learn.taskbucket.api.service.TaskService;
+import com.learn.taskbucket.api.service.CreateTaskService;
+import com.learn.taskbucket.api.service.RemoveTaskService;
+import com.learn.taskbucket.api.service.UpdateTaskService;
 
 @RestController
 @RequestMapping("/api/v1/task")
 public class TaskController {
 	@Autowired
-	TaskService taskService;
+	CreateTaskService taskService;
 
+	@Autowired
+	UpdateTaskService updateTaskService;
+
+	@Autowired
+	RemoveTaskService removeTaskService;
+
+	
 	@PostMapping(path = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> createTask(@RequestBody final CreateTaskRequest createTaskRequest) {
 			return new ResponseEntity<>(taskService.createTask(createTaskRequest), HttpStatus.CREATED);
@@ -36,12 +42,12 @@ public class TaskController {
 	public ResponseEntity<Object> updateTaskDetails(@RequestBody final UpdateTaskRequest request,
 			@RequestHeader(name = "userId", required = true) int userId, @PathVariable(required = true) int task_id)
 			 {
-			return new ResponseEntity<>(taskService.updateTask(request, userId, task_id), HttpStatus.OK);
+			return new ResponseEntity<>(updateTaskService.updateTask(request, userId, task_id), HttpStatus.OK);
 	}
 	
 	@DeleteMapping(path =  "/delete", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> removeTaskDetails(@RequestBody final DeleteTaskRequest request, @RequestHeader(name = "userId", required = true) int userId){
-		return new ResponseEntity<>(taskService.deleteTask(request, userId), HttpStatus.OK);
+		return new ResponseEntity<>(removeTaskService.deleteTask(request, userId), HttpStatus.OK);
 
 	}
 

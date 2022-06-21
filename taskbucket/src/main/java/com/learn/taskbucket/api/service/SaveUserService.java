@@ -18,7 +18,7 @@ import com.learn.taskbucket.api.repository.RoleRepository;
 import com.learn.taskbucket.api.repository.UserRepository;
 
 @Service
-public class UserServiceImp {
+public class SaveUserService {
 
 	@Autowired
 	private UserRepository userRepository;
@@ -46,31 +46,6 @@ public class UserServiceImp {
 		return response;
 	}
 	
-	public UpdateUserResponse modifyUser(UpdateUserRequest updateUserRequest, int userId) {
-		User user = userRepository.findById(userId);
-	    AddUserRequest userdetails = updateUserRequest.getUserdata();
-		
-		if(null != userdetails.getEmail_id() && !userdetails.getEmail_id().isEmpty())
-		{
-			user.setEmail_id(userdetails.getEmail_id());
-		}
-		if(userdetails.getIs_active() != -1)
-		{
-			user.setIs_active(userdetails.getIs_active());
-		}
-		if(null != userdetails.getUser_name() && !userdetails.getUser_name().isEmpty()) {
-			user.setUser_name(userdetails.getUser_name());
-		}
-		
-		try{
-			userRepository.save(user);
-		}catch (Exception  e) {
-			throw new TaskBucketException(TaskBucketErrors.INTERNAL_SERVER_ERROR);
-		}
-		
-		UpdateUserResponse response = UpdateUserResponse.builder().user_id(user.getUser_id()).status(Status.SUCCESS).build();
-		return response;
-	}
 	
 	public void validateRole(int role) {
 		Optional<Role> rol;

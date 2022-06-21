@@ -22,8 +22,35 @@ public class TodoViewService {
 
 	public TodoViewResponse findTodos(TodoViewRequest request) {
 		TodoViewResponse response;
-		List<Task> taskList = null;
+		validationChecks(request);
+		List<Task> taskList = getList(request);
+		try {
+			if (request.getEnd() >= taskList.size()) {
+				response = TodoViewResponse.builder().status(Status.SUCCESS)
+						.viewData(taskList.subList(request.getStart() - 1, taskList.size())).build();
+			} else {
+				response = TodoViewResponse.builder().status(Status.SUCCESS)
+						.viewData(taskList.subList(request.getStart() - 1, request.getEnd() - 1)).build();
+			}
+		} catch (ArrayIndexOutOfBoundsException e) {
+			throw new TaskBucketException(TaskBucketErrors.INCONSISTANT_RANGE);
+		}
+		return response;
+	}
 
+	public void validationChecks(TodoViewRequest request) {
+		if (request.getStart() > request.getEnd()) {
+			throw new TaskBucketException(TaskBucketErrors.INCONSISTANT_RANGE);
+		}
+		if (request.getStart() <= 0 || request.getStart() >= request.getEnd())
+			throw new TaskBucketException(TaskBucketErrors.INVALID_START);
+		if (request.getEnd() <= 0)
+			throw new TaskBucketException(TaskBucketErrors.INVALID_END);
+
+	}
+
+	private List<Task> getList(TodoViewRequest request) {
+		List<Task> taskList = null;
 		if (request.getView_type().equals(TaskStatus.ALL)) {
 			taskList = taskRepository.findAll();
 
@@ -34,22 +61,7 @@ public class TodoViewService {
 			throw new TaskBucketException(TaskBucketErrors.INVALID_VIEW_TYPE);
 
 		}
-
-		try {
-			response = TodoViewResponse.builder().status(Status.SUCCESS)
-					.viewData(taskList.subList(request.getStart() - 1, request.getEnd() - 1)).build();
-		} catch (ArrayIndexOutOfBoundsException e) {
-			throw new TaskBucketException(TaskBucketErrors.INCONSISTANT_RANGE);
-		}
-		return response;
-	}
-
-	public void validationChecks(TodoViewRequest request) {
-		if (request.getStart() <= 0 || request.getStart() >= request.getEnd())
-			throw new TaskBucketException(TaskBucketErrors.INVALID_START);
-		if (request.getEnd() <= 0)
-			throw new TaskBucketException(TaskBucketErrors.INVALID_END);
-
+		return taskList;
 	}
 
 }

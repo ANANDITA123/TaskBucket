@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ControllerException {
+public class BusinessException {
 
 	private String errorCode;
 	private String errorMessage;

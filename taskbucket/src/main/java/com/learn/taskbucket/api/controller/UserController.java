@@ -19,15 +19,18 @@ import com.learn.taskbucket.api.dto.AddUserRequest;
 import com.learn.taskbucket.api.dto.AddUserResponse;
 import com.learn.taskbucket.api.dto.UpdateUserRequest;
 import com.learn.taskbucket.api.dto.UpdateUserResponse;
-import com.learn.taskbucket.api.service.UserServiceImp;
+import com.learn.taskbucket.api.service.SaveUserService;
+import com.learn.taskbucket.api.service.UpdateUserService;
 
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController {
 
 	@Autowired
-	UserServiceImp userServiceImp;
-
+	SaveUserService userServiceImp;
+	@Autowired
+	UpdateUserService updateUserService;
+	
 	@PostMapping(path = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<AddUserResponse> addUser(@RequestBody final AddUserRequest addUserRequest) {
 		return new ResponseEntity<>(userServiceImp.saveUser(addUserRequest), HttpStatus.CREATED);
@@ -37,7 +40,7 @@ public class UserController {
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, path = "/update/{userId}")
 	public @ResponseBody ResponseEntity<UpdateUserResponse> updateUser(
 			@Valid @RequestBody final UpdateUserRequest request, @PathVariable(required = true) int userId) {
-		return new ResponseEntity<>(userServiceImp.modifyUser(request, userId), HttpStatus.OK);
+		return new ResponseEntity<>(updateUserService.modifyUser(request, userId), HttpStatus.OK);
 	}
 
 }
