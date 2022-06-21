@@ -33,7 +33,7 @@ public class AddUserRequest {
 	@Size(min = 1, max = 100)
 	@Pattern(regexp="\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}\\b")
 	private String email_id;
-	private Byte is_active;
+	private Byte is_active = -1;
 
 
     

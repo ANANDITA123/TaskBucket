@@ -17,7 +17,7 @@ public class TaskParams {
 
 	private String headline;
 	private String description;
-	private int assignee_id;
+	private int assignee;
 	private LocalDateTime eod;
 	private TaskStatus task_status;
 }

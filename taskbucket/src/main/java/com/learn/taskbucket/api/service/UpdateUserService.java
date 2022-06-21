@@ -24,15 +24,23 @@ public class UpdateUserService {
 		
 		if(null != userdetails.getEmail_id() && !userdetails.getEmail_id().isEmpty())
 		{
-			user.setEmail_id(userdetails.getEmail_id());
+			user.setEmail_id(userdetails.getEmail_id());	
+			if(userRepository.findbyEmail(updateUserRequest.getUserdata().getEmail_id()).isEmpty());	
+			{
+				throw new TaskBucketException(TaskBucketErrors.EMAIL_UPDATE_NOT_ALLOWED);
+			}
 		}
 		if(userdetails.getIs_active() != -1)
 		{
 			user.setIs_active(userdetails.getIs_active());
+		}else {
+			user.setIs_active(Byte.valueOf("1"));
 		}
 		if(null != userdetails.getUser_name() && !userdetails.getUser_name().isEmpty()) {
 			user.setUser_name(userdetails.getUser_name());
 		}
+		
+		
 		
 		try{
 			userRepository.save(user);

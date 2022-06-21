@@ -25,10 +25,8 @@ import com.learn.taskbucket.api.service.UpdateTaskService;
 public class TaskController {
 	@Autowired
 	CreateTaskService taskService;
-
 	@Autowired
 	UpdateTaskService updateTaskService;
-
 	@Autowired
 	RemoveTaskService removeTaskService;
 

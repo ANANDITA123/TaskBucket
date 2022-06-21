@@ -8,9 +8,13 @@ public enum TaskBucketErrors {
 	MISSING_TASK_ID("EC-002", "Missing mandatory field TaskId"),
 	MISSING_UPDATE_BY("EC-003", "Missing mandatory field updated_by"),
 	TASK_ID_DOESNOT_EXIST("EC-004", "Task Id Does not exist"),
+	TASK_ALREADY_CLOSED("EC-004", "Update action not allowed over closed task"),
 	AUTHARIZATION_EXCEPTION("EC-005", "you are not allowed to perform this activity, kindly check with admin"),
+	INVALID_HEADER("EC-005", "UserId provided in header is incorrect"),
 	NO_DATA_FOUND("EC-006", "No Record Available"),
 	INCONSISTANT_RANGE("EC-007", "Please Provide a valid range"),
+	INVALID_CREATOR("EC-007", "Creator does not exist"),
+	INVALID_ASSIGNEE("EC-007", "Assignee does not exist"),
 
 	INVALID_USER_NAME("EC-101", "User name is invalid"),
 	INVALID_EMAIL("EC-102", "email id is invalid"),
@@ -31,6 +35,8 @@ public enum TaskBucketErrors {
 	EMPTY_UPDATE_FIELD("EC-206", "No data for update task"),
 
 	EMAIL_ALREADY_PRESENT("EC-301", "user already exists for this email"),
+	EOD_INVALID("EC-301", "Please provide valid EOD"),
+	EMAIL_UPDATE_NOT_ALLOWED("EC-301", "this email id is already is record, either remove this field or provide unique email"),
 	EMAIL_NOT_PRESENT("EC-302", "Provided email id does not exists"),
 	INVALID_DESCRIPTION_LENGTH("EC-303", "Provided description is excceding the max length limit");
 	
